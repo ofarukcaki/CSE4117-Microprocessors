@@ -148,36 +148,72 @@ int main(int argc, char *argv[]) {
                     counter++;                               //skip to the next empty location in memory.
                 } else if (strcmp(token, "add") == 0)        //----------------- ADD -------------------------------
                 {
-                    // buradaki parametreler ile sitedekilerin sıralaması farklı gibi: http://www.marmaralectures.com/reptile-8-the-hardware-design/
-                    op1 = strtok(NULL, "\n\t\r ");
+                    // alucode: 000
+                    op1 = strtok(NULL, "\n\t\r "); // dst register
                     op2 = strtok(NULL, "\n\t\r ");
                     op3 = strtok(NULL, "\n\t\r ");
-                    chch = (op1[0] - 48) | ((op2[0] - 48) << 3) | ((op3[0] - 48) << 6);
+                    chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
                     program[counter] = 0x7000 + ((chch)&0x00ff);
                     counter++;
                 } else if (strcmp(token, "sub") == 0) {
-                    //to be added
+                    // alucode: 001
+                    op1 = strtok(NULL, "\n\t\r "); // dst register
+                    op2 = strtok(NULL, "\n\t\r ");
+                    op3 = strtok(NULL, "\n\t\r ");
+                    chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
+                    program[counter] = 0x7200 + ((chch)&0x00ff);
+                    counter++;
                 } else if (strcmp(token, "and") == 0) {
-                    //to be added
+                    // alucode: 010
+                    op1 = strtok(NULL, "\n\t\r "); // dst register
+                    op2 = strtok(NULL, "\n\t\r ");
+                    op3 = strtok(NULL, "\n\t\r ");
+                    chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
+                    program[counter] = 0x7400 + ((chch)&0x00ff);
+                    counter++;
                 } else if (strcmp(token, "or") == 0) {
-                    //to be added
+                    // alucode: 011
+                    op1 = strtok(NULL, "\n\t\r "); // dst register
+                    op2 = strtok(NULL, "\n\t\r ");
+                    op3 = strtok(NULL, "\n\t\r ");
+                    chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 2);
+                    program[counter] = 0x7600 + ((chch)&0x00ff);
+                    counter++;
                 } else if (strcmp(token, "xor") == 0) {
-                    //to be added
+                    // alucode: 100
+                    op1 = strtok(NULL, "\n\t\r "); // dst register
+                    op2 = strtok(NULL, "\n\t\r ");
+                    op3 = strtok(NULL, "\n\t\r ");
+                    chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
+                    program[counter] = 0x7800 + ((chch)&0x00ff);
+                    counter++;
                 } else if (strcmp(token, "not") == 0) {
+                    // NOT r1 r2
+                    // alucode: 111 000
                     op1 = strtok(NULL, "\n\t\r ");
                     op2 = strtok(NULL, "\n\t\r ");
                     ch = (op1[0] - 48) | ((op2[0] - 48) << 3);
-                    program[counter] = 0x7500 + ((ch)&0x00ff);
+                    program[counter] = 0x7E00 + ((ch)&0x00ff);
                     counter++;
                 } else if (strcmp(token, "mov") == 0) {
-                    //to be added
+                    // alucode: 111 001
+                    op1 = strtok(NULL, "\n\t\r ");
+                    op2 = strtok(NULL, "\n\t\r ");
+                    ch = (op1[0] - 48) | ((op2[0] - 48) << 3);
+                    program[counter] = 0x7E40 + ((ch)&0x00ff);
+                    counter++;
                 } else if (strcmp(token, "inc") == 0) {
+                    // alucode: 111 010
                     op1 = strtok(NULL, "\n\t\r ");
                     ch = (op1[0] - 48) | ((op1[0] - 48) << 3);
-                    program[counter] = 0x7700 + ((ch)&0x00ff);
+                    program[counter] = 0x7E80 + ((ch)&0x00ff);
                     counter++;
                 } else if (strcmp(token, "dec") == 0) {
-                    //to be added
+                    // alucode: 111 011
+                    op1 = strtok(NULL, "\n\t\r ");
+                    ch = (op1[0] - 48) | ((op1[0] - 48) << 3);
+                    program[counter] = 0x7EC0 + ((ch)&0x00ff);
+                    counter++;
                 } else //------WHAT IS ENCOUNTERED IS NOT AN INSTRUCTION BUT A LABEL. UPDATE THE LABEL TABLE--------
                 {
                     labeltable[nooflabels].location = counter; //read the label and update labeltable.
