@@ -6,7 +6,8 @@ module match_stick_top (
 						output [3:0] grounds
 						);
 						
-reg [15:0] total;
+reg [11:0] total;
+reg [11:0] minus;
 reg [1:0] state;
 
 wire [1:0] pbs;
@@ -15,9 +16,11 @@ assign pbs=pushbuttons;
 wire [3:0] ds;
 assign ds=dipswitchess;
 
-reg playerNum= 1'd1;
+reg [3:0] playerNum= 4'b0001;
+reg [15:0] dataModule;
 
-sevensegment ss(.datain(total), .grounds(grounds), .display(display), .clk(clk));
+
+sevensegment ss(.datain(dataModule), .grounds(grounds), .display(display), .clk(clk));
 
 always @(posedge clk)
 	begin
@@ -30,21 +33,23 @@ always @(posedge clk)
 							if(ds > 4'b0000 & ds <  4'b1011)
 								begin
 									total <= total - ds;
-									if(playerNum == 1'd1)
-										playerNum <= playerNum+1;
+									dataModule <= {playerNum[3:0],total[11:0]};
+									if(playerNum == 4'b0001)
+										playerNum <= 4'b0010;
 									else
-										playerNum <= playerNum+1;
+										playerNum <= 4'b0001;
 									// total ve player ı yazdır
 								end
 							else
 								begin
-									//bu aralıkta değilse ekrana "-" ve player bas
+									minus <= 12'b000001100101;
+									dataModule <= {playerNum[3:0],minus[11:0]};
 								end
 						end
 					else if(pbs == 2'b10)
 						begin
 							state <= 2'b10;
-							total <= 16'b0000000001100100;
+							total <= 12'b000001100100;
 						end
 					else
 						begin
@@ -71,7 +76,7 @@ always @(posedge clk)
 
 initial
 	begin
-		total=16'b0000000001100100;
+		total=12'b000001100100;
 		state=2'b00;
 	end
 
