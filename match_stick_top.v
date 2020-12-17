@@ -58,19 +58,13 @@ always @(posedge clk)
 				end
 			2'b01:
 				begin
-					if(pbs == 2'b10)
-						begin
-							state <= 2'b10;
-						end
-					else
-						begin
-							state <= 2'b01;
-						end
+					state <= 2'b00;
 				end
 			2'b10:
 				begin
 					state <= 2'b00;		
 				end
+			default: state <= state;
 		endcase
 	end
 
