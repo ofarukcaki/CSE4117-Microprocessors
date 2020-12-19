@@ -85,10 +85,12 @@ int main(int argc, char *argv[]) {
 
             //========================================   FIRST PASS  ======================================================
             while (token) {
+                // printf("current token %s\n", token);
+
                 if (strcmp(token, "ldi") == 0) //---------------LDI INSTRUCTION--------------------
                 {
-                    op1 = strtok(NULL, "\n\t\r ");                                      //get the 1st operand of ldi, which is the register that ldi loads
-                    op2 = strtok(NULL, "\n\t\r ");                                      //get the 2nd operand of ldi, which is the data that is to be loaded
+                    op1 = strtok(NULL, "\n\t\r "); //get the 1st operand of ldi, which is the register that ldi loads
+                    op2 = strtok(NULL, "\n\t\r ");
                     program[counter] = 0x1000 + hex2int(op1);                           //generate the first 16-bit of the ldi instruction
                     counter++;                                                          //move to the second 16-bit of the ldi instruction
                     if ((op2[0] == '0') && (op2[1] == 'x'))                             //if the 2nd operand is twos complement hexadecimal
@@ -219,11 +221,15 @@ int main(int argc, char *argv[]) {
                     labeltable[nooflabels].location = counter; //read the label and update labeltable.
                     op1 = (char *)malloc(sizeof(token));
                     strcpy(op1, token);
+                    // printf("label: %s\n", op1);
+
                     labeltable[nooflabels].name = op1;
                     nooflabels++;
                 }
+
                 token = strtok(NULL, ",\n\t\r "); // if what is read before is an instruction, this will be NULL
                                                   //if what is read before is an label, this will be an opcode.
+                // printf("next token: %s\n",token);
             }
         }
 
