@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
                     op2 = strtok(NULL, "\n\t\r ");
                     op3 = strtok(NULL, "\n\t\r ");
                     chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
-                    program[counter] = 0x7000 + ((chch)&0x00ff);
+                    program[counter] = 0x7000 + ((chch)&0x01ff);
                     counter++;
                 } else if (strcmp(token, "sub") == 0) {
                     // alucode: 001
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
                     op2 = strtok(NULL, "\n\t\r ");
                     op3 = strtok(NULL, "\n\t\r ");
                     chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
-                    program[counter] = 0x7200 + ((chch)&0x00ff);
+                    program[counter] = 0x7200 + ((chch)&0x01ff);
                     counter++;
                 } else if (strcmp(token, "and") == 0) {
                     // alucode: 010
@@ -171,7 +171,9 @@ int main(int argc, char *argv[]) {
                     op2 = strtok(NULL, "\n\t\r ");
                     op3 = strtok(NULL, "\n\t\r ");
                     chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
-                    program[counter] = 0x7400 + ((chch)&0x00ff);
+                    program[counter] = ((chch)&0x01ff) + 0x7400;
+                    //printf("\nop1:%s  op2:%s   op3:%s   chch:%d  pc: %d\n",op1,op2,op3,chch,program[counter]);
+
                     counter++;
                 } else if (strcmp(token, "or") == 0) {
                     // alucode: 011
@@ -179,7 +181,7 @@ int main(int argc, char *argv[]) {
                     op2 = strtok(NULL, "\n\t\r ");
                     op3 = strtok(NULL, "\n\t\r ");
                     chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 2);
-                    program[counter] = 0x7600 + ((chch)&0x00ff);
+                    program[counter] = 0x7600 + ((chch)&0x01ff);
                     counter++;
                 } else if (strcmp(token, "xor") == 0) {
                     // alucode: 100
@@ -187,7 +189,7 @@ int main(int argc, char *argv[]) {
                     op2 = strtok(NULL, "\n\t\r ");
                     op3 = strtok(NULL, "\n\t\r ");
                     chch = (op1[0] - 48) | ((op2[0] - 48) << 6) | ((op3[0] - 48) << 3);
-                    program[counter] = 0x7800 + ((chch)&0x00ff);
+                    program[counter] = 0x7800 + ((chch)&0x01ff);
                     counter++;
                 } else if (strcmp(token, "not") == 0) {
                     // NOT r1 r2
