@@ -1,4 +1,3 @@
-.code   
             ldi 7 55
             ldi 2 8
 start       ldi 6 15 
